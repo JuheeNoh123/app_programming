@@ -4,7 +4,7 @@ import 'package:brandme/loginpage.dart';
 import 'package:brandme/home/mainhomepage.dart';
 import 'package:brandme/widget/profile.dart';
 import 'package:brandme/widget/strategy.dart';
-import 'package:brandme/testpage.dart';
+import 'package:brandme/test/test_start_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'BrandMe',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
       ),
@@ -50,9 +50,13 @@ class _BottomNavControllerState extends State<BottomNavController> {
     final List<Widget> pages = [
       const Profile(),
       const MainHomePage(), //메인 AI 추천 탭
-      TestPage(), //직업 추천탭
+      BrandTestStartPage(), //직업 추천탭
     ];
+
+    final bool isTestTab = _currentIndex == 2;
+
     return Scaffold(
+      backgroundColor: isTestTab ? const Color(0xFF202123) : Colors.white,
       body: pages[_currentIndex],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
@@ -75,6 +79,7 @@ class _BottomNavControllerState extends State<BottomNavController> {
             topRight: Radius.circular(25),
           ),
           child: BottomNavigationBar(
+            //backgroundColor: bgColor,
             iconSize: 32, // 원하는 크기
             currentIndex: _currentIndex,
             onTap: (index) {
