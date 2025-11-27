@@ -8,8 +8,10 @@ class InfoCard extends StatelessWidget {
   final List<String> items;
   final bool dark;
   final bool showArrow;
-  final VoidCallback? onArrowPressed; // ✅ 콜백 추가
-  final int cnt;
+  final VoidCallback? onArrowPressed; // 콜백 추가
+  final int missionCount; // 미션/활동용 개수 데이터 (기본값 0)
+  final int activityCount;
+
   const InfoCard({
     super.key,
     required this.title,
@@ -17,8 +19,9 @@ class InfoCard extends StatelessWidget {
     required this.items,
     this.dark = false,
     this.showArrow = false,
-    this.cnt = 0,
     this.onArrowPressed, // ✅ 생성자에도 추가
+    this.missionCount = 0,
+    this.activityCount = 0,
   });
 
   @override
@@ -49,6 +52,7 @@ class InfoCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //제목
                     Text(
                       title,
                       style: TextStyle(
@@ -58,6 +62,7 @@ class InfoCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
+                    //부제목
                     Text(
                       subtitle,
                       style: TextStyle(
@@ -66,14 +71,35 @@ class InfoCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    for (var item in items)
+
+                    //항목리스트
+                    for (var i = 0; i < items.length; i++) ...[
                       Text(
-                        item,
+                        items[i],
                         style: TextStyle(
                           color: textColor.withValues(alpha: 0.9),
                           fontSize: 14,
                         ),
                       ),
+                      if (title == "미션/활동" && i == 0)
+                        Text(
+                          "✔️ $missionCount개",
+                          style: TextStyle(
+                            color: textColor.withValues(alpha: 0.7),
+                            fontSize: 15,
+                          ),
+                        ),
+
+                      if (title == "미션/활동" && i == 1)
+                        Text(
+                          "✔️ $activityCount개",
+                          style: TextStyle(
+                            color: textColor.withValues(alpha: 0.7),
+                            fontSize: 15,
+                          ),
+                        ),
+                      const SizedBox(height: 8),
+                    ],
                   ],
                 ),
               ),

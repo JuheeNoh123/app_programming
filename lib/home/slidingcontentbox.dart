@@ -5,7 +5,9 @@ import 'package:brandme/widget/palette.dart';
 import 'package:brandme/widget/strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:brandme/home/infocard.dart';
+import 'dart:convert';
 
 //메인 페이지 ai 추천+브랜딩 기록 하얀 컨테이너 박스 내부
 class SlidingContentBox extends StatefulWidget {
@@ -22,6 +24,8 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
 
   bool _showChecklist = false;
   int _selectedTab = 0; // 0 = AI 추천, 1 = 브랜딩 기록
+  int _missionCnt = 0;
+  int _activityCnt = 0;
 
   @override
   void initState() {
@@ -48,8 +52,16 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
     super.dispose();
   }
 
-  void _toggleChecklist() {
-    setState(() => _showChecklist = !_showChecklist);
+  void _toggleChecklist() async {
+    setState(() {
+      _showChecklist = !_showChecklist;
+    });
+
+    // ✅ 체크리스트에서 돌아올 때 개수 다시 갱신
+    if (!_showChecklist) {
+      debugPrint("[SlidingContentBox] 체크리스트 닫힘 → 개수 다시 읽기");
+      await _loadChecklistCounts(); // rebuild → FutureBuilder 다시 실행됨
+    }
   }
 
   @override
@@ -197,8 +209,6 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
 
   // 브랜딩 기록 UI
   Widget brandingContent() {
-    int missionCnt = 0;
-    int activityCnt = 0;
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
@@ -345,6 +355,8 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
                   dark: true,
                   showArrow: true,
                   onArrowPressed: _toggleChecklist,
+                  missionCount: _missionCnt,
+                  activityCount: _activityCnt,
                 ),
 
                 SizedBox(height: 100),
@@ -354,6 +366,42 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
         ),
       ),
     );
+  }
+
+  Future<void> _loadChecklistCounts() async {
+    final prefs = await SharedPreferences.getInstance();
+    final userName = prefs.getString("userName");
+    if (userName == null) return;
+
+    final missionData = prefs.getString("missionItems_$userName");
+    final activityData = prefs.getString("activityItems_$userName");
+
+    int missionCnt = 0;
+    int activityCnt = 0;
+
+    if (missionData != null) {
+      final decoded = json.decode(missionData);
+      if (decoded is List) {
+        missionCnt = decoded.where((e) => e is Map && e["done"] == true).length;
+      }
+    }
+
+    if (activityData != null) {
+      final decoded = json.decode(activityData);
+      if (decoded is List) {
+        activityCnt = decoded
+            .where((e) => e is Map && e["done"] == true)
+            .length;
+      }
+    }
+
+    debugPrint("[SlidingContentBox] 완료된 미션: $missionCnt, 활동: $activityCnt");
+
+    // ✅ 전역 변수 업데이트
+    setState(() {
+      _missionCnt = missionCnt;
+      _activityCnt = activityCnt;
+    });
   }
 
   //활동

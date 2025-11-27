@@ -21,6 +21,13 @@ class _ChecklistTabState extends State<ChecklistTab> {
     _loadUserData();
   }
 
+  @override
+  void dispose() {
+    debugPrint("[ChecklistTab] dispose() called — 화면 닫힘");
+    _saveUserData(); // ✅ 화면 닫힐 때 강제로 저장
+    super.dispose();
+  }
+
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     userName = prefs.getString("userName");
@@ -207,9 +214,11 @@ class _ChecklistTabState extends State<ChecklistTab> {
                 checkColor: Colors.white,
                 controlAffinity: ListTileControlAffinity.leading,
                 value: item["done"],
-                onChanged: (val) {
+                onChanged: (val) async {
                   item["done"] = val ?? false;
                   onUpdate(List.from(items));
+                  await _saveUserData(); // ✅ 체크 변경 즉시 저장
+                  debugPrint("[ChecklistTab] 저장 완료: ${json.encode(items)}");
                 },
                 title: Text(
                   item["text"],
