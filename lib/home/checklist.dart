@@ -217,7 +217,7 @@ class _ChecklistTabState extends State<ChecklistTab> {
                 onChanged: (val) async {
                   item["done"] = val ?? false;
                   onUpdate(List.from(items));
-                  await _saveUserData(); // ✅ 체크 변경 즉시 저장
+                  await _saveUserData(); // 체크 변경 즉시 저장
                   debugPrint("[ChecklistTab] 저장 완료: ${json.encode(items)}");
                 },
                 title: Text(
@@ -248,7 +248,7 @@ class _ChecklistTabState extends State<ChecklistTab> {
       builder: (_) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10), // ✅ 둥근 모서리
+            borderRadius: BorderRadius.circular(10), // 둥근 모서리
           ),
           title: Text("$title 수정", style: const TextStyle(fontSize: 18)),
           content: Column(

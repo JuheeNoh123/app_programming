@@ -1,4 +1,4 @@
-import 'package:brandme/activity.dart';
+import 'package:brandme/widget/activity.dart';
 import 'package:brandme/home/checklist.dart';
 import 'package:brandme/widget/jobpage.dart';
 import 'package:brandme/widget/palette.dart';
