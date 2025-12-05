@@ -330,8 +330,10 @@ class _ProfileState extends State<Profile> {
               const SizedBox(height: 20),
 
               Wrap(
-                alignment: WrapAlignment.spaceBetween,
-                runSpacing: 25,
+                alignment: WrapAlignment.center,
+                spacing: 15, // 가로 간격
+                runSpacing: 10, // 세로 간격 (줄 간격 줄이기)
+
                 children: [
                   _buildGauge("창의성", _percent("creativity")),
                   _buildGauge("도전성", _percent("challenge")),
@@ -350,14 +352,14 @@ class _ProfileState extends State<Profile> {
   Widget _buildGauge(String label, double percent) {
     final p = percent.clamp(0, 100);
     return SizedBox(
-      width: 100,
-      height: 100,
+      width: 90, // 기존 100 → 90
+      height: 90, // 기존 100 → 90
       child: Stack(
         alignment: Alignment.center,
         children: [
           SizedBox(
-            width: 80,
-            height: 80,
+            width: 70,
+            height: 70,
             child: CircularProgressIndicator(
               value: p / 100,
               strokeWidth: 7,

@@ -4,7 +4,6 @@ import 'package:brandme/widget/jobpage.dart';
 import 'package:brandme/widget/palette.dart';
 import 'package:brandme/widget/strategy.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:brandme/home/infocard.dart';
 import 'dart:convert';
