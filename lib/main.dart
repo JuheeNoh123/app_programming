@@ -2,7 +2,6 @@ import 'package:brandme/loginpage.dart';
 import 'package:brandme/home/mainhomepage.dart';
 import 'package:brandme/profile.dart';
 import 'package:brandme/test/test_start_page.dart';
-import 'package:brandme/widget/strategy.dart';
 import 'package:flutter/material.dart';
 
 void main() {

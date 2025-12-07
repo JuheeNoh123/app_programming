@@ -1,4 +1,3 @@
-import 'package:brandme/main.dart';
 import 'package:brandme/widget/strategy_data.dart';
 import 'package:flutter/material.dart';
 

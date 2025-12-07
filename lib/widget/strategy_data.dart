@@ -1,5 +1,4 @@
 // strategy_data.dart
-import 'package:flutter/material.dart';
 
 /// 전략 콘텐츠 모델
 class StrategyContent {
