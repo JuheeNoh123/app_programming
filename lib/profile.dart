@@ -352,42 +352,49 @@ class _ProfileState extends State<Profile> {
   Widget _buildGauge(String label, double percent) {
     final p = percent.clamp(0, 100);
     return SizedBox(
-      width: 90, // 기존 100 → 90
-      height: 90, // 기존 100 → 90
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SizedBox(
-            width: 70,
-            height: 70,
-            child: CircularProgressIndicator(
-              value: p / 100,
-              strokeWidth: 7,
-              backgroundColor: Colors.grey.shade200,
-              valueColor: const AlwaysStoppedAnimation<Color>(kBrandRed),
-            ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      width: 90,
+      height: 90,
+      child: TweenAnimationBuilder<double>(
+        tween: Tween(begin: 0, end: p / 100),
+        duration: const Duration(seconds: 2), // ⏱ 애니메이션 시간
+        curve: Curves.easeOutCubic, // 부드럽게 감속
+        builder: (context, value, _) {
+          return Stack(
+            alignment: Alignment.center,
             children: [
-              Text(
-                "${p.toInt()}%",
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
+              SizedBox(
+                width: 70,
+                height: 70,
+                child: CircularProgressIndicator(
+                  value: value,
+                  strokeWidth: 7,
+                  backgroundColor: Colors.grey.shade200,
+                  valueColor: const AlwaysStoppedAnimation<Color>(kBrandRed),
                 ),
               ),
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.grey,
-                  height: 1.2,
-                ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "${(value * 100).toInt()}%",
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  Text(
+                    label,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey,
+                      height: 1.2,
+                    ),
+                  ),
+                ],
               ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

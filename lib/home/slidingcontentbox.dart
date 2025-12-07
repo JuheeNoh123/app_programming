@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:brandme/home/infocard.dart';
 import 'dart:convert';
+import 'package:fl_chart/fl_chart.dart';
 
 //메인 페이지 ai 추천+브랜딩 기록 하얀 컨테이너 박스 내부
 class SlidingContentBox extends StatefulWidget {
@@ -240,33 +241,77 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
                       ),
                     ],
                   ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.trending_up,
-                          color: Color(0xFFBB271A),
-                          size: 28,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          "브랜드 지수",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Color(0xFFBB271A),
+                  // child: Center(
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     children: [
+                  //       const Icon(
+                  //         Icons.trending_up,
+                  //         color: Color(0xFFBB271A),
+                  //         size: 28,
+                  //       ),
+                  //       const SizedBox(width: 8),
+                  //       const Text(
+                  //         "브랜드 지수",
+                  //         style: TextStyle(
+                  //           fontWeight: FontWeight.bold,
+                  //           fontSize: 16,
+                  //           color: Color(0xFFBB271A),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: TweenAnimationBuilder<double>(
+                      tween: Tween(begin: 0, end: 1),
+                      duration: const Duration(milliseconds: 1200),
+                      curve: Curves.easeInOutCubic,
+                      builder: (context, animationValue, child) {
+                        return LineChart(
+                          LineChartData(
+                            gridData: FlGridData(show: false),
+                            titlesData: FlTitlesData(show: false),
+                            borderData: FlBorderData(
+                              show: true,
+                              border: const Border(
+                                bottom: BorderSide(
+                                  color: Colors.black87,
+                                  width: 1,
+                                ),
+                                left: BorderSide(
+                                  color: Colors.black87,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            minX: 0,
+                            maxX: 5,
+                            minY: 0,
+                            maxY: 10,
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: _animatedSpots(animationValue),
+                                isCurved: false, // ❗꺾은선 그래프 유지
+                                color: const Color(0xFFBB271A),
+                                barWidth: 2.5,
+                                isStrokeCapRound: true,
+                                dotData: FlDotData(show: false),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 30),
                 InfoCard(
                   title: "성장 기록",
                   subtitle: "강점 : 실행력\n약점 : 감성/논리",
-                  items: ["🏷️브랜드 슬로건", "# 빠른 실행", "# 꾸준 중심", "# 문제 해결"],
+                  items: ["⭐브랜드 슬로건", "# 빠른 실행", "# 꾸준 중심", "# 문제 해결"],
                   dark: true,
                 ),
                 SizedBox(height: 100),
@@ -365,6 +410,21 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
         ),
       ),
     );
+  }
+
+  /// ⚙️ 애니메이션에 따라 점을 부드럽게 보간
+  List<FlSpot> _animatedSpots(double t) {
+    final base = [
+      const FlSpot(0, 3),
+      const FlSpot(1, 5),
+      const FlSpot(2, 4),
+      const FlSpot(3, 7),
+      const FlSpot(4, 6),
+      const FlSpot(5, 8),
+    ];
+
+    final count = (base.length * t).clamp(1, base.length).toInt();
+    return base.take(count).toList();
   }
 
   Future<void> _loadChecklistCounts() async {
@@ -472,10 +532,23 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
-      onPressed: () {
+      onPressed: () async {
+        final prefs = await SharedPreferences.getInstance();
+        final resultType = prefs.getString('brandme_result_type');
+
+        if (resultType == null) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text("아직 테스트 결과가 없습니다.")));
+          return;
+        }
+
+        // push로 페이지 띄우기 (bottom bar 유지됨)
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const StrategyPage()),
+          MaterialPageRoute(
+            builder: (_) => StrategyPage(resultType: resultType),
+          ),
         );
       },
       child: Container(

@@ -2,6 +2,7 @@ import 'package:brandme/loginpage.dart';
 import 'package:brandme/home/mainhomepage.dart';
 import 'package:brandme/profile.dart';
 import 'package:brandme/test/test_start_page.dart';
+import 'package:brandme/widget/strategy.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +20,13 @@ class MyApp extends StatelessWidget {
       title: 'BrandMe',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFFFBFBFB), // ✅ kLightGray 고정
+          foregroundColor: Color(0xFF202123), // ✅ kBgDark 고정
+          elevation: 0, // ✅ 그림자 제거
+          centerTitle: true,
+          surfaceTintColor: Colors.transparent,
+        ),
       ),
       home: const LoginPage(),
     );
