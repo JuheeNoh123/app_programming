@@ -636,11 +636,28 @@ class _SlidingContentBoxState extends State<SlidingContentBox>
         backgroundColor: Colors.transparent,
         shadowColor: Colors.transparent,
       ),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const JobPage()),
-        );
+      onPressed: () async {
+        final prefs = await SharedPreferences.getInstance();
+        final resultType = prefs.getString('brandme_result_type');
+
+        if (resultType == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text("아직 테스트 결과가 없습니다."),
+              backgroundColor: const Color(0xFF3B2F2F),
+              behavior: SnackBarBehavior.floating,
+              //margin: const EdgeInsets.only(bottom: 70, left: 20, right: 20),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+          return;
+        }
+
+        // push로 페이지 띄우기 (bottom bar 유지됨)
+        Navigator.push(context, MaterialPageRoute(builder: (_) => JobPage()));
       },
       child: Container(
         height: 230,

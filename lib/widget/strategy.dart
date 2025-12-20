@@ -159,7 +159,7 @@ class StrategyPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
 
-              // ✅ 상태 토글 아이콘
+              // 상태 토글 아이콘
               trailing: Icon(
                 isExpanded
                     ? Icons.keyboard_arrow_up
@@ -205,7 +205,7 @@ class StrategyPage extends StatelessWidget {
                 ],
               ),
 
-              // ✅ 펼쳐진 내용 부분
+              // 펼쳐진 내용 부분
               children: [
                 Container(
                   width: double.infinity,

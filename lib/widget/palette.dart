@@ -6,8 +6,8 @@ class PalettePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("직업 추천")),
-      body: const Center(child: Text("직업 추천 탭 UI 예정 자리")),
+      appBar: AppBar(title: const Text("직업 팔래트 추천")),
+      body: const Center(child: Text("팔래트 추천 탭 UI 예정 자리")),
     );
   }
 }

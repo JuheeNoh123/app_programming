@@ -190,7 +190,7 @@ class _ActivityPageState extends State<ActivityPage>
             Expanded(
               child: Center(
                 child: FractionallySizedBox(
-                  widthFactor: 0.75, // 👈 화면의 90%만 차지
+                  widthFactor: 0.75, // 화면의 90%만 차지
                   child: SlideTransition(
                     position: _animation,
                     child: _buildTutorialCard(

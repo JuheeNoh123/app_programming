@@ -356,7 +356,7 @@ class _ProfileState extends State<Profile> {
       height: 90,
       child: TweenAnimationBuilder<double>(
         tween: Tween(begin: 0, end: p / 100),
-        duration: const Duration(seconds: 2), // ⏱ 애니메이션 시간
+        duration: const Duration(seconds: 2), // 애니메이션 시간
         curve: Curves.easeOutCubic, // 부드럽게 감속
         builder: (context, value, _) {
           return Stack(

@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-
 class ActivityData {
   static final Map<String, Map<String, dynamic>> activityByType = {
-    // 🔹 창의형
     "창의형": {
       "activities": ["하루 영감 기록노트", "나만의 색감 보드", "감성 사진 산책", "디자인 리디자인"],
       "tutorials": {
@@ -37,7 +34,6 @@ class ActivityData {
       },
     },
 
-    // 🔹 도전형
     "도전형": {
       "activities": ["30일 성장 프로젝트", "작은 발표 챌린지", "팀 목표 게임화", "하루 피드백 일기"],
       "tutorials": {
@@ -72,7 +68,6 @@ class ActivityData {
       },
     },
 
-    // 🔹 집중형
     "집중형": {
       "activities": ["루틴 타임블록 설계", "집중력 테스트 기록", "기록형 독서 노트", "명상으로 리셋하기"],
       "tutorials": {

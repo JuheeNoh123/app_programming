@@ -150,7 +150,7 @@ class MainHomePage extends StatelessWidget {
               ),
             ),
 
-            // 🔥 아래 흰색 박스
+            // 아래 흰색 박스
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,

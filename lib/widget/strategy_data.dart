@@ -16,7 +16,7 @@ class StrategyContent {
   });
 }
 
-/// 🔹 끊임없이 성장하는 탐험가
+//끊임없이 성장하는 탐험가
 final explorerStrategy = StrategyContent(
   coreDirection: "[작게 시작]하고 [빠르게 실행]하는 방식이\n가장 큰 성장을 만듭니다.",
   coreDescription: "“끊임없이 성장하는 탐험가”형은 즉시 실행력과 도전정신을 기반으로 성장합니다.",
@@ -69,7 +69,7 @@ final explorerStrategy = StrategyContent(
   ],
 );
 
-/// 🔹 감성적으로 세상을 해석하는 크리에이터
+// 감성적으로 세상을 해석하는 크리에이터
 final creatorStrategy = StrategyContent(
   coreDirection: "[감정을 인식]하고 [표현하는 과정]이\n깊은 창의력을 이끕니다.",
   coreDescription: "“감성적으로 세상을 해석하는 크리에이터”형은 감정과 직관 중심으로 사고합니다.",
@@ -117,7 +117,7 @@ final creatorStrategy = StrategyContent(
   ],
 );
 
-/// 🔹 논리적으로 계획하는 전략가
+//논리적으로 계획하는 전략가
 final strategistStrategy = StrategyContent(
   coreDirection: "[계획적으로 구조화]하고 [체계적으로 실행하는 것]이\n성장의 열쇠입니다.",
   coreDescription: "“논리적으로 계획하는 전략가”형은 목표 설정과 관리에 강점을 가집니다.",
@@ -164,7 +164,7 @@ final strategistStrategy = StrategyContent(
   ],
 );
 
-/// 🔹 타입에 따른 전략 반환
+// 타입에 따른 전략 반환
 StrategyContent getStrategy(String resultType) {
   switch (resultType) {
     case '끊임없이\n성장하는 탐험가':
